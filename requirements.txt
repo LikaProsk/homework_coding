@@ -1,3 +1,4 @@
 pytest
 requests
 cerberus
+selenium==4.1.3
