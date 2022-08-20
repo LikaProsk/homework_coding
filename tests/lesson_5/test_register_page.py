@@ -1,22 +1,19 @@
-from tests.lesson_5.base_test import BaseTest
-from selenium.webdriver.common.by import By
+import random
+
+from lesson_6.page_object.registration_page import RegistrationPageObject
+from lesson_6.page_object.success_registration_page import SuccessRegistrationPage
 
 
-class TestRegisterPage(BaseTest):
+class TestRegisterPage:
 
     def test_wait_elements_register_page(self, web_driver, url):
-        web_driver.get(f'{url}//index.php?route=account/register')
+        registration_page_object = RegistrationPageObject(web_driver)
+        registration_page_object.open_page(url)
+        registration_page_object.check_form_elements()
 
-        elements = [
-            ('поле Основные данные', (By.CSS_SELECTOR, '#account>legend')),
-            ('поле Имя', (By.ID, 'input-firstname')),
-            ('поле Пароль', (By.CSS_SELECTOR, 'fieldset:nth-child(2)>legend'))
-        ]
-
-        errors = []
-        for element in elements:
-            result = self.check_element_on_page(web_driver, element[1])
-            if not result:
-                errors.append(f'Элемент {element[0]} {element[1][1]} не найден')
-
-        assert not len(errors), '\n'.join(errors)
+    def test_registration(self, web_driver, url):
+        registration_page_object = RegistrationPageObject(web_driver)
+        success_registration_page = SuccessRegistrationPage(web_driver)
+        registration_page_object.open_page(url)
+        registration_page_object.registration('Лилия', 'Проскурина', f'test{random.randint(100,1000)}@gmail.com', '89111111111', 'qazwsx1234')
+        success_registration_page.check_text_success_reg()
