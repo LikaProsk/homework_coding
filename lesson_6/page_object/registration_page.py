@@ -1,3 +1,5 @@
+import allure
+
 from selenium.webdriver.common.by import By
 
 from lesson_6.helpers import check_elements, set_value_in_input, click_element_with_waiting
@@ -5,7 +7,8 @@ from lesson_6.helpers import check_elements, set_value_in_input, click_element_w
 
 class RegistrationPageObject:
 
-    def __init__(self, web_driver):
+    def __init__(self, web_driver, log):
+        self.log = log
         self.web_driver = web_driver
 
     form_fields = {
@@ -19,34 +22,44 @@ class RegistrationPageObject:
         'Продолжить': (By.XPATH, '//input[@type="submit"]'),
     }
 
+    @allure.step('Открытие страницы регистрации')
     def open_page(self, url):
         self.web_driver.get(f'{url}//index.php?route=account/register')
 
+    @allure.step('Проверка налличия элементов формаы регистрации')
     def check_form_elements(self):
         check_elements(self.web_driver, self.form_fields.values())
 
+    @allure.step('Заполнене поля имени')
     def set_firstname(self, value):
         set_value_in_input(self.web_driver, self.form_fields.get('Имя'), value)
 
+    @allure.step('Заполнене поля фамилии')
     def set_lastname(self, value):
         set_value_in_input(self.web_driver, self.form_fields.get('Фамилия'), value)
 
+    @allure.step('Заполнене поля email')
     def set_email(self, value):
         set_value_in_input(self.web_driver, self.form_fields.get('email'), value)
 
+    @allure.step('Заполнене поля телефон')
     def set_phone(self, value):
         set_value_in_input(self.web_driver, self.form_fields.get('Телефон'), value)
 
+    @allure.step('Заполнене поля пароль')
     def set_password(self, value):
         set_value_in_input(self.web_driver, self.form_fields.get('Пароль'), value)
         set_value_in_input(self.web_driver, self.form_fields.get('Подтверждение пароля'), value)
 
+    @allure.step('Нажатие на checkbox согласия')
     def click_agree(self):
         click_element_with_waiting(self.web_driver, self.form_fields.get('Согласие'))
 
+    @allure.step('Нажатие на кнопку продолжить')
     def click_continue(self):
         click_element_with_waiting(self.web_driver, self.form_fields.get('Продолжить'))
 
+    @allure.step('Регистрация пользователя')
     def registration(self, firstname, lastname, email, phone, password):
         self.set_firstname(firstname)
         self.set_lastname(lastname)
