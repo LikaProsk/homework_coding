@@ -1,30 +1,14 @@
-from tests.lesson_5.base_test import BaseTest
-from selenium.webdriver.common.by import By
+from lesson_6.page_object.home_page import HomePageObject
 
 
-class TestHomePage(BaseTest):
+class TestHomePage:
 
     def test_wait_elements_home_page(self, web_driver):
-        elements = [
-            (By.LINK_TEXT, 'Desktops'),
-            (By.LINK_TEXT, 'Desktops'),
-            (By.LINK_TEXT, 'Laptops & Notebooks'),
-            (By.LINK_TEXT, 'Components'),
-            (By.LINK_TEXT, 'Tablets'),
-            (By.LINK_TEXT, 'Software'),
-            (By.LINK_TEXT, 'Phones & PDAs'),
-            (By.LINK_TEXT, 'Cameras'),
-            (By.LINK_TEXT, 'MP3 Players'),
-            (By.LINK_TEXT, 'MacBook'),
-            (By.LINK_TEXT, 'iPhone'),
-            (By.LINK_TEXT, 'Apple Cinema 30"'),
-            (By.LINK_TEXT, 'Apple Cinema 30"')
-        ]
+        self.home_page_object = HomePageObject(web_driver)
+        self.home_page_object.check_menu_element()
+        self.home_page_object.check_item_cards_elements()
 
-        errors = []
-        for element in elements:
-            result = self.check_element_on_page(web_driver, element)
-            if not result:
-                errors.append(f'Элемент {element[1]} не найден')
-
-        assert not len(errors), '\n'.join(errors)
+    def test_change_currency(self, web_driver):
+        self.home_page_object = HomePageObject(web_driver)
+        self.home_page_object.change_currency_by_name('$ US Dollar')
+        self.home_page_object.check_current_currency('$')
