@@ -133,3 +133,5 @@ dmypy.json
 
 !/lesson_3/books.csv
 !/lesson_3/users.json
+!/logs/
+!/allure_results/

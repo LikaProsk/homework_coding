@@ -1,4 +1,6 @@
 pytest
 requests
 cerberus
+allure-pytest
 selenium==4.1.3
+pendulum
