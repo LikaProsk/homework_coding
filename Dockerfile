@@ -12,7 +12,7 @@ COPY . .
 
 ENV url "https://demo.opencart.com"
 ENV browser "chrome"
-ENV executor "127.0.0.1"
+ENV executor "selenoid"
 ENV drivers "usr/local/bin"
 
 CMD pytest tests/lesson_5  --url $url --browser $browser --executor $executor --drivers $drivers
