@@ -17,7 +17,7 @@ def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="chrome", help="браузер для запуска")
     parser.addoption("--executor", action="store", default="selenoid")
     parser.addoption("--drivers", action="store", default="lesson_5/drivers", help="путь до webdriver")
-    parser.addoption("--browser_version", action="store", default="60", help="версия браузера")
+    parser.addoption("--browser_version", action="store", default="97", help="версия браузера")
 
 
 @pytest.fixture()
@@ -59,8 +59,7 @@ def web_driver(request, url):
         executor_url = f'http://{executor}:4444/wd/hub'
         caps = {
             'browserName': browser,
-            'version': browser_version
-
+            'browserVersion': browser_version
         }
         driver = webdriver.Remote(command_executor=executor_url, desired_capabilities=caps)
     driver.maximize_window()
