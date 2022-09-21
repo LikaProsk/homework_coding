@@ -5,7 +5,7 @@ import requests as requests
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromiumService
 from selenium.webdriver.firefox.service import Service as FFService
-
+from selenium.webdriver.chrome.options import Options
 from lesson_7.logging_helper import LoggingHelper
 
 
@@ -42,7 +42,10 @@ def web_driver(request, url):
     if executor == 'localhost' or executor == '127.0.0.1':
         if browser == "chrome":
             service = ChromiumService(executable_path=get_root_dir() + "/" + drivers + "/chromedriver")
-            driver = webdriver.Chrome(service=service)
+            options = Options()
+            options.add_argument('--no-sandbox')
+            options.add_argument('--disable-dev-shm-usage')
+            driver = webdriver.Chrome(service=service, chrome_options=options)
         elif browser == "firefox":
             service = FFService(executable_path=drivers + "/geckodriver")
             driver = webdriver.Firefox(service=service)
